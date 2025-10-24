@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * 모든 성공 응답의 표준 구조를 정의하는 클래스
- *
+ * <p>
  * 이 클래스를 통해 통일된 응답 포맷을 반환할 수 있습니다. 컨트롤러 메소드 사용 예시 return
  * ApiResponse.success(CommonResponseCode.SUCCESS, data);
  */
