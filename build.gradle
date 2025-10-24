@@ -5,8 +5,8 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'lib.seungwoo'
-version = '0.0.1'
+group = 'com.github.2eungwoo'
+version = '1.0.0'
 description = 'response-kit'
 
 java {
