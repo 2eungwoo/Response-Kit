@@ -38,7 +38,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class GlobalExceptionHandler {
 
     /**
-     * @Valid @RequestBody 검증 실패
+     * '@Valid' '@RequestBody' 검증 실패
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * @Validated @ModelAttribute 검증 실패
+     * '@Validated' '@ModelAttribute' 검증 실패
      */
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponse> handleBindException(BindException ex) {
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * @RequestParam, @PathVariable 등 ConstraintViolation 발생
+     * '@RequestParam', '@PathVariable' 등 ConstraintViolation 발생
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolation(

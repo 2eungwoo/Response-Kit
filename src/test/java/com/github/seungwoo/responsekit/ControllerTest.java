@@ -55,9 +55,9 @@ class ControllerTest {
     }
 
     @Test
-    @DisplayName("유효하지 않은 요청 시 FieldError 목록이 정확히 보여진다.")
+    @DisplayName("password를 유효하지 않은 값으로 보내면 FieldError에 password가 정확히 보여진다.")
     void invalid_request_returns_field_errors() throws Exception {
-        SignupRequest req = new SignupRequest("", "invalidemail", "123");
+        SignupRequest req = new SignupRequest("hong", "test@gmail.com", "123");
 
         mvc.perform(post("/api/signup")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -65,6 +65,6 @@ class ControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.success").value(false))
             .andExpect(jsonPath("$.errors").isArray())
-            .andExpect(jsonPath("$.errors[0].field").value("name"));
+            .andExpect(jsonPath("$.errors[0].field").value("password"));
     }
 }
