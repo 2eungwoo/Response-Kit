@@ -14,6 +14,6 @@ public class SignupController {
 
     @PostMapping
     public ApiResponse<String> signup(@Valid @RequestBody SignupRequest request) {
-        return ApiResponse.success(CommonResponseCode.SUCCESS, "회원가입 완료");
+        return ApiResponse.success(UserResponseCode.SIGNUP_SUCCESS, request.email());
     }
 }
