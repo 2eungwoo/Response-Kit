@@ -6,6 +6,9 @@ import java.util.List;
 import lombok.Getter;
 
 /**
+ * Copyright (c) 2025 seungwoo
+ * Licensed under the MIT License. See the LICENSE file for details.
+ *
  * 실패(에러) 응답의 표준 구조를 정의하는 클래스
  * <p>
  * 검증 실패(@Valid), 비즈니스 예외(CustomException), 시스템 예외(Exception) 모두 이 클래스로 변환하여 응답에 전달할 수 있습니다.

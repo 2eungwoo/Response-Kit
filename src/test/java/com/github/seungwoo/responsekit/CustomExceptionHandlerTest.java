@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/*
+ * Copyright (c) 2025 seungwoo
+ * Licensed under the MIT License. See the LICENSE file for details.
+ */
 @RestControllerAdvice
 @Order(99) // 라이브러리 기본 핸들러보다 높은 우선순위 테스트
 public class CustomExceptionHandlerTest {

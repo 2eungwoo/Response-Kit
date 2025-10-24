@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 /**
+ * Copyright (c) 2025 seungwoo
+ * Licensed under the MIT License. See the LICENSE file for details.
+ *
  * 공통적으로 사용되는 HTTP 상태 기반 응답 코드 Enum
  * <p>
  * 이 코드는 모든 프로젝트에서 바로 사용할 수 있으며, 필요한 경우 BaseResponseCode를 구현한 도메인별 Enum을 추가 정의할 수 있습니다.

@@ -4,6 +4,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/*
+ * Copyright (c) 2025 seungwoo
+ * Licensed under the MIT License. See the LICENSE file for details.
+ */
 public record SignupRequest(
     @NotBlank(message = "이름은 필수입니다.")
     String name,

@@ -14,6 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+/*
+ * Copyright (c) 2025 seungwoo
+ * Licensed under the MIT License. See the LICENSE file for details.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 class ControllerTest {

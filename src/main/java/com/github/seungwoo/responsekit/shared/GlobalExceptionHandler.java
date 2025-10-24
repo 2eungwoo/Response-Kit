@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
+ * Copyright (c) 2025 seungwoo
+ * Licensed under the MIT License. See the LICENSE file for details.
+ *
  * 전역 예외 처리기
  *
  * <p>기본 검증(@Valid, @Validated)과 커스텀 예외(CustomException), 일반 예외(Exception)를

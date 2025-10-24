@@ -3,6 +3,9 @@ package com.github.seungwoo.responsekit.shared;
 import lombok.Getter;
 
 /**
+ * Copyright (c) 2025 seungwoo
+ * Licensed under the MIT License. See the LICENSE file for details.
+ *
  * 도메인별 CustomException 상속용 추상 클래스.
  * <p>
  * 예시:
