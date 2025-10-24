@@ -1,21 +1,26 @@
 # Response-Kit  
-스프링 부트 프로젝트에서 **일관된 API 응답 구조**와 **검증 실패 시 표준화된 에러 포맷**을 제공하는 경량 유틸리티 라이브러리입니다.  
-서비스 전반에 `ApiResponse`, `ErrorResponse`, `FieldError`, `ResponseCode` 등 통합 응답 포맷을 쉽게 적용할 수 있습니다.
-간단한 CRUD 실습 환경이나 해커톤 등에서 빠르게 백엔드 템플릿을 구축해야하는 경우 간편하게 사용할 수 있도록 작성된 라이브러리입니다.
+
+> Spring Boot 애플리케이션에서 일관된 API 응답 구조와 표준화된 검증 오류 포맷을 손쉽게 구현할 수 있도록 설계된 경량 유틸리티 라이브러리입니다.
+
+[![JitPack Release](https://jitpack.io/v/2eungwoo/response-kit.svg)](https://jitpack.io/#2eungwoo/response-kit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-17+-orange.svg)]()
+[![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-brightgreen.svg)]()
 
 
-### 주요 특징
-| 기능 | 설명 |
-|------|------|
-| **성공/실패 응답 통일화** | `ApiResponse.success()`, `ApiResponse.fail()`로 일관된 구조 제공 |
-| **Spring Validation 완전 지원** | `@Valid`, `@Validated` 실패 시 `ErrorResponse` 자동 반환 |
-| **도메인별 확장 가능한 응답 코드** | `ResponseCode` 인터페이스로 커스텀 응답코드 확장 가능 |
-| **간단한 통합 구조** | 별도의 설정 없이 import만으로 사용 가능 |
-| **선택적 전역 예외 처리 제공** | `GlobalExceptionHandler` 기본 제공 (선택적으로 수정/제외 가능) |
+### 언제 쓰면 좋은지?
+> 프로젝트 초기 단계에서 응답 포맷, 예외 처리, 검증 로직을 빠르게 통일하고 싶은 경우 아래 상황에 특히 유용합니다.
+
+| 상황 | Response-Kit이 해결하는 문제 |
+|------|---------------------------|
+| `@Valid` 검증 실패 시 JSON 파싱 오류 | 자동으로 표준화된 `ErrorResponse` 반환 |
+| 도메인별 응답코드 관리 어려움 | `ResponseCode` 인터페이스 기반으로 확장 가능 |
+| 각 컨트롤러마다 try-catch 반복 | 전역 `GlobalExceptionHandler` 기본 제공 |
+| 팀원 간 응답 포맷 불일치 | 통합된 `ApiResponse`로 일관성 확보 |
 <br/>
 
 ## 이 라이브러리를 쓰면 이런 변화가 있습니다
-#### before
+> 🫨 before : Spring Boot 기본 응답
 ```json
 {
   "timestamp": "2025-10-24T04:00:00",
@@ -24,7 +29,7 @@
   "path": "/api/signup"
 }
 ```
-#### after
+> ✅ after : Response-Kit 응답
 ```json
 {
   "success": false,
@@ -56,7 +61,7 @@
 
 ### **JitPack 설정**
 
-`build.gradle`
+> `build.gradle` 설정
 ```gradle
 repositories {
     mavenCentral()
@@ -71,16 +76,17 @@ dependencies {
 ### 제공 클래스 구조
 ```
 response-kit
- ㄴ ApiResponse.java         → 성공/실패 응답 통합 클래스
- ㄴ ErrorResponse.java       → Validation 실패 시 응답 구조
+ ㄴ ApiResponse.java         → 성공/실패 응답 통합 클래스 (success/fail)
+ ㄴ ErrorResponse.java       → Validation 실패 시 응답 구조 포함
  ㄴ FieldError.java          → 필드 단위 검증 실패 정보
- ㄴ ResponseCode.java        → 공통 인터페이스 (도메인별 확장용)
+ ㄴ ResponseCode.java        → 공통 인터페이스 (도메인별 enum으로 확장 가능)
  ㄴ CommonResponseCode.java  → 기본 응답코드 (OK, BAD_REQUEST 등)
- ㄴ CustomException.java     → 서비스 전역 커스텀 예외 베이스 클래스
+ ㄴ CustomException.java     → 베이스 예외 클래스  (도메인별 예외로 상속 가능)
+ ㄴ GlobalExceptionHandler.java → 선택적 전역 예외 처리 핸들러
 ```
 
 ## 사용 예제
-### Controller 응답 사용 예시
+> Controller 응답 사용 예시
 ```java
 @RestController
 @RequestMapping("/api/users")
@@ -96,7 +102,7 @@ public class UserController {
 ```
 <br/>
 
-### 도메인별 응답 코드 확장 예시
+> 도메인별 응답 코드 확장 예시
 #### ResponseCode
 - `ResponseCode`는 인터페이스 기반이므로 각 도메인별 `enum`으로 확장하여 유지보수가 용이하게 설계되었습니다.
 - 기본 제공 `CommonResponseCode` 외에도 `UserResponseCode`, `OrderResponseCode` 등 자유롭게 확장 가능합니다.
@@ -114,7 +120,7 @@ public enum AuthResponseCode implements ResponseCode {
 ```
 <br/>
 
-### 도메인별 커스텀 예외 클래스 작성 예시
+> 도메인별 커스텀 예외 클래스 작성 예시
 #### CustomException
 - `CustomException`은 `ResponseCode`를 생성자에서 주입받아 도메인별 예외를 선언적으로 관리할 수 있도록 설계되었습니다.
 - 예를 들어, `DuplicateEmailException`은 `AuthResponseCode.DUPLICATE_EMAIL`를 전달받아 코드/메시지를 자동 설정합니다.  
@@ -136,7 +142,8 @@ if (userRepository.existsByEmail(request.getEmail())) {
 
 <br/>
 
-### ExceptionHandler 수정 예시
+> ExceptionHandler 수정 예시
+> 
 > 해당 라이브러리에는 GlobalExceptionHandler 클래스가 내부에 포함되어 있습니다.
 > 
 > 필요 시 프로젝트 내에서 오버라이드하거나 복사 수정해 사용할 수 있습니다.
@@ -145,29 +152,20 @@ if (userRepository.existsByEmail(request.getEmail())) {
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
-        log.warn("[CustomException] {}", ex.getResponseCode().message());
+    > 예: 프로젝트 상황에 맞게 다음과 같이 커스터마이징할 수 있습니다.
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
         return ResponseEntity
-                .status(ex.getResponseCode().status())
-                .body(ErrorResponse.of(ex.getResponseCode(), null));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationError(MethodArgumentNotValidException ex) {
-        var errors = FieldError.from(ex.getBindingResult());
-        return ResponseEntity
-                .badRequest()
-                .body(ErrorResponse.of(CommonResponseCode.BAD_REQUEST, errors));
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleUnknownError(Exception ex) {
-        log.error("[Unhandled Exception]", ex);
-        return ResponseEntity
-                .internalServerError()
-                .body(ErrorResponse.of(CommonResponseCode.INTERNAL_ERROR));
+            .status(HttpStatus.FORBIDDEN)
+            .body(ErrorResponse.of(CommonResponseCode.FORBIDDEN));
     }
 }
 ```
 
+---
+
+## License  
+MIT License © 2025 [Seungwoo Lee](https://github.com/2eungwoo)
+
+## Feedback  
+오류 제보 및 지적 환영, [Issues](https://github.com/2eungwoo/response-kit/issues)에 남겨주시면 정말 정말 감사하겠습니다.
