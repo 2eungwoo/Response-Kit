@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.github.2eungwoo'
-version = '1.0.3'
+version = '1.0.4'
 description = 'response-kit'
 
 java {
@@ -34,18 +34,20 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.named('bootJar') {
+    enabled = false
+}
+tasks.named('jar') {
+    enabled = true
+    archiveClassifier = '' // plain 제거
+}
+
 publishing {
     publications {
         create("mavenJava", MavenPublication) {
-            from components.java
             artifactId = 'Response-Kit'
+            from components.java
         }
-    }
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:3.3.4"
     }
 }
 
@@ -57,12 +59,4 @@ tasks.withType(Javadoc).configureEach {
     def opt = options as StandardJavadocDocletOptions
     opt.addStringOption('Xdoclint:none', '-quiet')
     failOnError = false
-}
-
-tasks.named('bootJar') {
-    enabled = false
-}
-
-tasks.named('jar') {
-    enabled = true
 }
