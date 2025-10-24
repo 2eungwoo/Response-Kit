@@ -171,10 +171,10 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 예상치 못한 서버 오류
+     * GlobalExceptionHandler에서 처리하지 못한 예외 최종 캐치
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleUnExpectedException(Exception ex) {
         log.error("[Server Error]", ex);
         return ResponseEntity
             .status(CommonResponseCode.INTERNAL_ERROR.getHttpStatus())
