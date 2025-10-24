@@ -1,4 +1,4 @@
-package com.github.seungwoo.responsekit;
+package com.github.seungwoo.responsekit.example;
 
 import com.github.seungwoo.responsekit.response.ApiResponse;
 import com.github.seungwoo.responsekit.response.CommonResponseCode;
