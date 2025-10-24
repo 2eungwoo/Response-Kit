@@ -1,4 +1,4 @@
-# 🗃️ Response-Kit  
+# Response-Kit  
 스프링 부트 프로젝트에서 **일관된 API 응답 구조**와 **검증 실패 시 표준화된 에러 포맷**을 제공하는 경량 유틸리티 라이브러리입니다.  
 서비스 전반에 `ApiResponse`, `ErrorResponse`, `FieldError`, `ResponseCode` 등 통합 응답 포맷을 쉽게 적용할 수 있습니다.
 
@@ -13,8 +13,8 @@
 | **선택적 전역 예외 처리 제공** | `GlobalExceptionHandler` 기본 제공 (선택적으로 수정/제외 가능) |
 <br/>
 
-# 🎃 이 라이브러리를 쓰면 이런 변화가 있습니다
-### before
+## 이 라이브러리를 쓰면 이런 변화가 있습니다
+#### before
 ```json
 {
   "timestamp": "2025-10-24T04:00:00",
@@ -23,7 +23,7 @@
   "path": "/api/signup"
 }
 ```
-### after
+#### after
 ```json
 {
   "success": false,
@@ -51,7 +51,7 @@
 
 </br>
 
-# 🍪 설치 및 사용 방법
+## 설치 및 사용 방법
 
 ### **JitPack 설정**
 
@@ -78,7 +78,7 @@ response-kit
  ㄴ CustomException.java     → 서비스 전역 커스텀 예외 베이스 클래스
 ```
 
-## 🔹 사용 예시 1. - Controller 응답
+### Controller 응답 사용 예시
 ```java
 @RestController
 @RequestMapping("/api/users")
@@ -94,12 +94,28 @@ public class UserController {
 ```
 <br/>
 
-## 🔹 사용 예시 2. - 예외 커스텀
-### CustomException & ResponseCode 확장성
+### 도메인별 응답 코드 확장 예시
+#### ResponseCode
+- `ResponseCode`는 인터페이스 기반이므로 각 도메인별 `enum`으로 확장하여 유지보수가 용이하게 설계되었습니다.
+- 기본 제공 `CommonResponseCode` 외에도 `UserResponseCode`, `OrderResponseCode` 등 자유롭게 확장 가능합니다.
+```java
+@Getter
+@RequiredArgsConstructor
+public enum AuthResponseCode implements ResponseCode {
+    SIGNUP_SUCCESS(HttpStatus.CREATED, "AUTH001", "회원가입 성공"),
+    DUPLICATE_EMAIL(HttpStatus.CONFLICT, "AUTH409", "이미 존재하는 이메일입니다.");
+
+    private final HttpStatus status;
+    private final String code;
+    private final String message;
+}
+```
+<br/>
+
+### 도메인별 커스텀 예외 클래스 작성 예시
+#### CustomException
 - `CustomException`은 `ResponseCode`를 생성자에서 주입받아 도메인별 예외를 선언적으로 관리할 수 있도록 설계되었습니다.
 - 예를 들어, `DuplicateEmailException`은 `AuthResponseCode.DUPLICATE_EMAIL`를 전달받아 코드/메시지를 자동 설정합니다.  
-- `ResponseCode`는 인터페이스 기반이므로 각 도메인별 `enum`으로 확장하여 유지보수가 용이합니다.
-- 기본 제공 `CommonResponseCode` 외에도 `UserResponseCode`, `OrderResponseCode` 등 자유롭게 확장 가능합니다.
 
 ```java
 public class DuplicateEmailException extends CustomException {
@@ -115,9 +131,10 @@ if (userRepository.existsByEmail(request.getEmail())) {
     }
 ```
 
+
 <br/>
 
-## 🔹 사용 예시 3. - ExceptionHandler
+### ExceptionHandler 수정 예시
 > 해당 라이브러리에는 GlobalExceptionHandler 클래스가 내부에 포함되어 있습니다.
 > 
 > 필요 시 프로젝트 내에서 오버라이드하거나 복사 수정해 사용할 수 있습니다.
@@ -149,22 +166,6 @@ public class GlobalExceptionHandler {
                 .internalServerError()
                 .body(ErrorResponse.of(CommonResponseCode.INTERNAL_ERROR));
     }
-}
-```
-
-<br/>
-
-## 🔹 사용 예시 4. - 도메인별 응답 코드 확장
-```java
-@Getter
-@RequiredArgsConstructor
-public enum AuthResponseCode implements ResponseCode {
-    SIGNUP_SUCCESS(HttpStatus.CREATED, "AUTH001", "회원가입 성공"),
-    DUPLICATE_EMAIL(HttpStatus.CONFLICT, "AUTH409", "이미 존재하는 이메일입니다.");
-
-    private final HttpStatus status;
-    private final String code;
-    private final String message;
 }
 ```
 
