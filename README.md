@@ -2,7 +2,7 @@
 
 > Spring Boot 애플리케이션에서 일관된 API 응답 구조와 표준화된 검증 오류 포맷을 손쉽게 구현할 수 있도록 설계된 경량 유틸리티 라이브러리입니다.
 
-[![JitPack Release](https://jitpack.io/v/2eungwoo/response-kit.svg)](https://jitpack.io/#2eungwoo/response-kit)
+[![](https://jitpack.io/v/2eungwoo/Response-Kit.svg)](https://jitpack.io/#2eungwoo/Response-Kit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)]()
 [![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-brightgreen.svg)]()
@@ -61,17 +61,26 @@
 ## 설치 및 구조
 
 ### **JitPack 설정**
-
+JitPack을 통해 라이브러리를 사용하려면,
+settings.gradle 또는 build.gradle에 다음 repository를 추가해야 합니다.
+> `settings.gradle` 설정
+```gradle
+dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
 > `build.gradle` 설정
 ```gradle
-repositories {
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
+dependencies {
+    implementation 'com.github.2eungwoo:Response-Kit:{version}'
+    // {version}에 해당하는 값은 본 README 최상단에 명시된 JitPack version 입니다.
 }
 
-dependencies {
-    implementation 'com.github.2eungwoo:response-kit:1.0.0'
-}
+
 ```
 
 ### 제공 클래스 구조
