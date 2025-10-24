@@ -7,8 +7,9 @@
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)]()
 [![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-brightgreen.svg)]()
 
+<br/>
 
-### 언제 쓰면 좋은지?
+## 언제 쓰면 좋은지?
 > 프로젝트 초기 단계에서 응답 포맷, 예외 처리, 검증 로직을 빠르게 통일하고 싶은 경우 아래 상황에 특히 유용합니다.
 
 | 상황 | Response-Kit이 해결하는 문제 |
@@ -146,13 +147,13 @@ if (userRepository.existsByEmail(request.getEmail())) {
 > 
 > 해당 라이브러리에는 GlobalExceptionHandler 클래스가 내부에 포함되어 있습니다.
 > 
-> 필요 시 프로젝트 내에서 오버라이드하거나 복사 수정해 사용할 수 있습니다.
+> 필요 시 프로젝트 내에서 오버라이드하거나 복사 수정해 커스터마이징할 수 있습니다.
 ```java
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    > 예: 프로젝트 상황에 맞게 다음과 같이 커스터마이징할 수 있습니다.
+    // 직접 작성한 오버라이드 핸들러 메소드 예시
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
         return ResponseEntity
