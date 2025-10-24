@@ -1,6 +1,7 @@
 # Response-Kit  
 스프링 부트 프로젝트에서 **일관된 API 응답 구조**와 **검증 실패 시 표준화된 에러 포맷**을 제공하는 경량 유틸리티 라이브러리입니다.  
 서비스 전반에 `ApiResponse`, `ErrorResponse`, `FieldError`, `ResponseCode` 등 통합 응답 포맷을 쉽게 적용할 수 있습니다.
+간단한 CRUD 실습 환경이나 해커톤 등에서 빠르게 백엔드 템플릿을 구축해야하는 경우 간편하게 사용할 수 있도록 작성된 라이브러리입니다.
 
 
 ### 주요 특징
@@ -51,7 +52,7 @@
 
 </br>
 
-## 설치 및 사용 방법
+## 설치 및 구조
 
 ### **JitPack 설정**
 
@@ -78,6 +79,7 @@ response-kit
  ㄴ CustomException.java     → 서비스 전역 커스텀 예외 베이스 클래스
 ```
 
+## 사용 예제
 ### Controller 응답 사용 예시
 ```java
 @RestController
