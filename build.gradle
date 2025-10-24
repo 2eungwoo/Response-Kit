@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.github.2eungwoo'
-version = '1.0.4'
+version = '1.0.7'
 description = 'response-kit'
 
 java {
@@ -32,14 +32,6 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-
-tasks.named('bootJar') {
-    archiveClassifier = '' // bootJar → 기본 .jar 로 이름 지정
-}
-
-tasks.named('jar') {
-    enabled = false // plain.jar 생성 방지
 }
 
 publishing {
