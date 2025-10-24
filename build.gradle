@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.github.2eungwoo'
-version = '1.0.8'
+version = '1.0.9'
 description = 'response-kit'
 
 java {
@@ -32,6 +32,16 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('bootJar') {
+    enabled = false
+}
+
+tasks.named('jar') {
+    enabled = true
+    archiveClassifier = ''
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 publishing {
