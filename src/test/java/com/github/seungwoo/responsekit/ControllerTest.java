@@ -65,6 +65,6 @@ class ControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.success").value(false))
             .andExpect(jsonPath("$.errors").isArray())
-            .andExpect(jsonPath("$.errors[0].field").value("email"));
+            .andExpect(jsonPath("$.errors[0].field").value("name"));
     }
 }
