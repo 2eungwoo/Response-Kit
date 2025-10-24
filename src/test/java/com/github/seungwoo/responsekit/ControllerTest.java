@@ -24,7 +24,7 @@ class ControllerTest {
 
     @Test
     void valid_success() throws Exception {
-        var req = new SignupRequest("홍길동", "test@example.com", "password123");
+        SignupRequest req = new SignupRequest("홍길동", "test@example.com", "password123");
 
         mvc.perform(post("/api/signup")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -35,7 +35,7 @@ class ControllerTest {
 
     @Test
     void invalid_request_returns_error() throws Exception {
-        var req = new SignupRequest("", "wrongemail", "123");
+        SignupRequest req = new SignupRequest("", "wrongemail", "123");
 
         mvc.perform(post("/api/signup")
                 .contentType(MediaType.APPLICATION_JSON)
