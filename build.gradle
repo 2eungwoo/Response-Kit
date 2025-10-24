@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.github.2eungwoo'
-version = '1.0.0'
+version = '1.0.2'
 description = 'response-kit'
 
 java {
@@ -36,11 +36,9 @@ tasks.named('test') {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        create("mavenJava", MavenPublication) {
             from components.java
-            groupId = 'com.github.2eungwoo'
-            artifactId = 'response-kit'
-            version = '1.0.2'
+            artifactId = 'Response-Kit'
         }
     }
 }
