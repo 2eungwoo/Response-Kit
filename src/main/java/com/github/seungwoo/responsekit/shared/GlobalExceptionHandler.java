@@ -8,11 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
  * Copyright (c) 2025 seungwoo
@@ -73,6 +80,83 @@ public class GlobalExceptionHandler {
         return ResponseEntity
             .status(CommonResponseCode.BAD_REQUEST.getHttpStatus())
             .body(ErrorResponse.of(CommonResponseCode.BAD_REQUEST, errors));
+    }
+
+    /**
+     * HTTP Method 불일치 (ex: GET만 지원하는데 POST 요청)
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+        log.warn("[HTTP Method Not Supported] {}", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.METHOD_NOT_ALLOWED)
+            .body(ErrorResponse.of(CommonResponseCode.METHOD_NOT_ALLOWED));
+    }
+
+    /**
+     * Content-Type 불일치 (ex: application/json이 아닌 경우)
+     */
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> handleMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
+        log.warn("[Unsupported Media Type] {}", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+            .body(ErrorResponse.of(CommonResponseCode.UNSUPPORTED_MEDIA_TYPE));
+    }
+
+    /**
+     * 필수 요청 파라미터 누락
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorResponse> handleMissingRequestParameter(MissingServletRequestParameterException ex) {
+        log.warn("[Missing Request Parameter] {}", ex.getParameterName());
+        return ResponseEntity
+            .status(CommonResponseCode.BAD_REQUEST.getHttpStatus())
+            .body(ErrorResponse.of(CommonResponseCode.BAD_REQUEST));
+    }
+
+    /**
+     * PathVariable 누락
+     */
+    @ExceptionHandler(MissingPathVariableException.class)
+    public ResponseEntity<ErrorResponse> handleMissingPathVariable(MissingPathVariableException ex) {
+        log.warn("[Missing Path Variable] {}", ex.getVariableName());
+        return ResponseEntity
+            .status(CommonResponseCode.BAD_REQUEST.getHttpStatus())
+            .body(ErrorResponse.of(CommonResponseCode.BAD_REQUEST));
+    }
+
+    /**
+     * 요청 파라미터 타입 불일치 (ex: String → Integer 매핑 실패)
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        log.warn("[Type Mismatch] param: {}, requiredType: {}", ex.getName(), ex.getRequiredType());
+        return ResponseEntity
+            .status(CommonResponseCode.BAD_REQUEST.getHttpStatus())
+            .body(ErrorResponse.of(CommonResponseCode.BAD_REQUEST));
+    }
+
+    /**
+     * JSON 파싱 실패 (ex: JSON 형식 오류, 타입 불일치 등)
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleJsonParseError(HttpMessageNotReadableException ex) {
+        log.warn("[JSON Parse Error] {}", ex.getMessage());
+        return ResponseEntity
+            .status(CommonResponseCode.BAD_REQUEST.getHttpStatus())
+            .body(ErrorResponse.of(CommonResponseCode.BAD_REQUEST));
+    }
+
+    /**
+     * IllegalArgumentException / IllegalStateException 등 비즈니스 로직 위반
+     */
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    public ResponseEntity<ErrorResponse> handleIllegalState(Exception ex) {
+        log.warn("[Illegal State] {}", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(ErrorResponse.of(CommonResponseCode.CONFLICT));
     }
 
     /**
