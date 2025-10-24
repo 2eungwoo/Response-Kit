@@ -1,7 +1,6 @@
 package com.github.seungwoo.responsekit.example;
 
 import com.github.seungwoo.responsekit.response.ApiResponse;
-import com.github.seungwoo.responsekit.response.CommonResponseCode;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

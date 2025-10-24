@@ -1,5 +1,6 @@
 package com.github.seungwoo.responsekit.response;
 
+import com.github.seungwoo.responsekit.shared.BaseResponseCode;
 import java.util.Collections;
 import java.util.List;
 import lombok.Getter;

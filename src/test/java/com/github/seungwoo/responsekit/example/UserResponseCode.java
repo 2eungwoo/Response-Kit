@@ -1,6 +1,6 @@
 package com.github.seungwoo.responsekit.example;
 
-import com.github.seungwoo.responsekit.response.BaseResponseCode;
+import com.github.seungwoo.responsekit.shared.BaseResponseCode;
 import org.springframework.http.HttpStatus;
 
 public enum UserResponseCode implements BaseResponseCode {

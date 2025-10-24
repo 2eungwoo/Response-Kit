@@ -1,6 +1,6 @@
 package com.github.seungwoo.responsekit.example;
 
-import com.github.seungwoo.responsekit.response.CustomException;
+import com.github.seungwoo.responsekit.shared.CustomException;
 
 public class UserNotFoundException extends CustomException {
     public UserNotFoundException() {

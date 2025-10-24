@@ -1,5 +1,7 @@
-package com.github.seungwoo.responsekit.response;
+package com.github.seungwoo.responsekit.shared;
 
+import com.github.seungwoo.responsekit.response.ErrorResponse;
+import com.github.seungwoo.responsekit.response.FieldError;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.github.seungwoo.responsekit.response;
+package com.github.seungwoo.responsekit.shared;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
