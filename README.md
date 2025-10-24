@@ -62,8 +62,8 @@
 
 ### **JitPack 설정**
 JitPack을 통해 라이브러리를 사용하려면,
-settings.gradle 또는 build.gradle에 다음 repository를 추가해야 합니다.
-> `settings.gradle` 설정
+settings.gradle 또는 build.gradle에 다음 repository를 추가해야 합니다. (둘 중 하나)
+> `settings.gradle` 설정 
 ```gradle
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
@@ -79,7 +79,10 @@ repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
 }
+```
 
+> `dependency` 추가
+```gradle
 dependencies {
     implementation 'com.github.2eungwoo:Response-Kit:{version}'
     // {version}에 해당하는 값은 본 README 최상단에 명시된 JitPack version 입니다.
