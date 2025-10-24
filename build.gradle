@@ -44,3 +44,19 @@ publishing {
         }
     }
 }
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:3.3.4"
+    }
+}
+
+tasks.withType(GenerateModuleMetadata).configureEach {
+    suppressedValidationErrors.add('dependencies-without-versions')
+}
+
+tasks.withType(Javadoc).configureEach {
+    def opt = options as StandardJavadocDocletOptions
+    opt.addStringOption('Xdoclint:none', '-quiet')
+    failOnError = false
+}
