@@ -66,15 +66,20 @@ settings.gradle 또는 build.gradle에 다음 repository를 추가해야 합니�
 > `settings.gradle` 설정
 ```gradle
 dependencyResolutionManagement {
-		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-		repositories {
-			mavenCentral()
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
 > `build.gradle` 설정
 ```gradle
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     implementation 'com.github.2eungwoo:Response-Kit:{version}'
     // {version}에 해당하는 값은 본 README 최상단에 명시된 JitPack version 입니다.
