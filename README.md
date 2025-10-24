@@ -87,7 +87,7 @@ response-kit
 ```
 
 ## 사용 예제
-> Controller 응답 사용 예시
+#### Controller 응답 사용 예시
 ```java
 @RestController
 @RequestMapping("/api/users")
@@ -103,10 +103,10 @@ public class UserController {
 ```
 <br/>
 
-> 도메인별 응답 코드 확장 예시
-#### ResponseCode
-- `ResponseCode`는 인터페이스 기반이므로 각 도메인별 `enum`으로 확장하여 유지보수가 용이하게 설계되었습니다.
-- 기본 제공 `CommonResponseCode` 외에도 `UserResponseCode`, `OrderResponseCode` 등 자유롭게 확장 가능합니다.
+#### 도메인별 응답 코드 확장 예시
+> ResponseCode
+> - `ResponseCode`는 인터페이스 기반이므로 각 도메인별 `enum`으로 확장하여 유지보수가 용이하게 설계되었습니다.
+> - 기본 제공 `CommonResponseCode` 외에도 `UserResponseCode`, `OrderResponseCode` 등 자유롭게 확장 가능합니다.
 ```java
 @Getter
 @RequiredArgsConstructor
@@ -121,11 +121,10 @@ public enum AuthResponseCode implements ResponseCode {
 ```
 <br/>
 
-> 도메인별 커스텀 예외 클래스 작성 예시
-#### CustomException
-- `CustomException`은 `ResponseCode`를 생성자에서 주입받아 도메인별 예외를 선언적으로 관리할 수 있도록 설계되었습니다.
-- 예를 들어, `DuplicateEmailException`은 `AuthResponseCode.DUPLICATE_EMAIL`를 전달받아 코드/메시지를 자동 설정합니다.  
-
+#### 도메인별 커스텀 예외 클래스 작성 예시
+> CustomException
+> - `CustomException`은 `ResponseCode`를 생성자에서 주입받아 도메인별 예외를 선언적으로 관리할 수 있도록 설계되었습니다.
+> - 예를 들어, `DuplicateEmailException`은 `AuthResponseCode.DUPLICATE_EMAIL`를 전달받아 코드/메시지를 자동 설정합니다.  
 ```java
 public class DuplicateEmailException extends CustomException {
     public DuplicateEmailException() {
@@ -140,14 +139,11 @@ if (userRepository.existsByEmail(request.getEmail())) {
     }
 ```
 
-
 <br/>
 
-> ExceptionHandler 수정 예시
-> 
-> 해당 라이브러리에는 GlobalExceptionHandler 클래스가 내부에 포함되어 있습니다.
-> 
-> 필요 시 프로젝트 내에서 오버라이드하거나 복사 수정해 커스터마이징할 수 있습니다.
+#### ExceptionHandler 수정 예시
+> - 해당 라이브러리에는 GlobalExceptionHandler 클래스가 내부에 포함되어 있습니다. 
+> - 필요 시 프로젝트 내에서 오버라이드하거나 복사 수정해 커스터마이징할 수 있습니다.
 ```java
 @Slf4j
 @RestControllerAdvice
@@ -163,7 +159,6 @@ public class GlobalExceptionHandler {
 }
 ```
 
----
 
 ## License  
 MIT License © 2025 [Seungwoo Lee](https://github.com/2eungwoo)
